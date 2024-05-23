@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Github</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img class="profile-avatar" src="https://via.placeholder.com/180x180" alt=".">
+            <h1 class="profile-name">Gian Souza</h1>
+            <h2 class="profile-username">@ogiansouza</h2>
+            <ul class="numbers">
+                <li class="numbers-item">
+                    <h4>Repositórios</h4>
+                    <span class="repoNumber"></span>
+                </li>
+                <li class="numbers-item">
+                    <h4>Seguidores</h4>
+                    <span class="followersNumber"></span>
+                </li>
+                <li class="numbers-item">
+                    <h4>Seguindo</h4>
+                    <span class="followingNumber"></span>
+                </li>
+            </ul>
+            <a href="#" class="profileLink">Ver no Github</a>
+        </div>
+    </header>
+
+    <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const avatar = document.querySelector('.profile-avatar');
+        const name = document.querySelector('.profile-name');
+        const userName = document.querySelector('.profile-username');
+        const repoNumber = document.querySelector('.repoNumber');
+        const followersNumber = document.querySelector('.followersNumber');
+        const followingNumber = document.querySelector('.followingNumber');
+        const profileLink = document.querySelector('.profileLink');
+        
+        fetch('https://api.github.com/users/oRFolkz')
+        
+        .then( res => {
+            if (!res.ok) {
+                console.log("Erro ao se comunicar com a API")
+            } return res.json();
+        })
+
+        .then( data => 
+        {
+            avatar.src = data.avatar_url;
+            name.innerHTML = data.name;
+            userName.innerHTML = `@${data.login}`;
+            repoNumber.innerHTML = data.public_repos;
+            followersNumber.innerHTML = data.followers;
+            followingNumber.innerHTML = data.following;
+            profileLink.href = data.html_url;
+        })
+
+        .catch(error => {
+        console.log(error);
+
+        });
+    })
+    </script>
+</body>
+</html>
